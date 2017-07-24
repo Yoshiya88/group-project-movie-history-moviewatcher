@@ -5,15 +5,14 @@ let mdbConfig = require('./mdbGetter')();
 let movieFactory = require('./movie-factory.js');
 let builder = require('./template-builder.js');
 
-module.exports.buildMovieObj = (key, title, year, movieId, currentUser, castArr, poster_path) => {
+module.exports.buildMovieObj = (title, year, movieId, currentUser, castArr, poster_path) => {
 	let movieObj = {
-		key: key,
 		title: title,
 		release_date: year,
         id: movieId,
 		userId: currentUser,
-        poster_path: poster_path,
         cast: castArr,
+        poster_path: poster_path,
         watched: false
 	};
     console.log("movieObj", movieObj);

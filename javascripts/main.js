@@ -43,7 +43,6 @@ $("#logItOut").click( function() {
 $(document).on("click", ".add-watchlist", function() {
 	console.log("clicked add to Watchlist");
 	let castArr = [];
-	// let key = Object.keys();
 	let movieId = $(this).data("add-watch");
 	let title = $(`#${movieId}-title`).text();
 	let year = $(`#${movieId}-date`).text();
@@ -107,6 +106,17 @@ $(document).on("click", ".star", function() {
 		   		 }
 		    });
 	});
+});
+
+
+$(document).on("click", ".delete", function() {
+	console.log("click delete");
+	let movieId = $(this).data("delete-id");
+	console.log("this.data", $(this).data("delete-id"));
+	movieFactory.deleteMovie(movieId);
+	// .then(function (){
+		//load songs to refesh after delete
+	// })
 });
 
 
