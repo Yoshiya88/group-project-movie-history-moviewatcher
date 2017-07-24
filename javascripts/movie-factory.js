@@ -48,12 +48,25 @@ module.exports.addMovie = (movieFormObj) => {
   });
 };
 
+
 module.exports.getUserMovies = () => {
   return new Promise( ( resolve, reject) => {
     let currentUser = firebase.auth().currentUser.uid;
     $.ajax({
       url: `${fbURL}/movies.json?orderBy="userId"&equalTo="${currentUser}"`
     }).done( (movieData) => {
+      resolve(movieData);
+    });
+  });
+};
+
+module.exports.deleteMovie = (movieId) => {
+  console.log("movieId", movieId);
+  return new Promise( function (resolve, reject) {
+    $.ajax({
+      url: `${fbURL}/movies/${movieId}.json`,
+      type: "DELETE"
+    }).done(function(movieData) {
       resolve(movieData);
     });
   });
