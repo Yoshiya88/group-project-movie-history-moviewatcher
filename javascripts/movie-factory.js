@@ -23,7 +23,7 @@ module.exports.getCast = function (movieId){
         $.ajax({
             url: `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${mdbConfig.key}`
         }).done((movieCast)=>{
- 			let temp = movieCast.cast.slice(-3);
+ 			let temp = movieCast.cast.slice(0, 3);
  			let castNames = [];
  			temp.forEach(function(cast){
             	castNames.push(cast.name);
@@ -55,13 +55,17 @@ module.exports.getUserMovies = () => {
     $.ajax({
       url: `${fbURL}/movies.json?orderBy="userId"&equalTo="${currentUser}"`
     }).done( (movieData) => {
+      console.log("movie data", movieData);
+      let idArr = Object.keys(movieData);
+      idArr.forEach( function(key) {
+        movieData[key].fbid = key;
+      });
       resolve(movieData);
     });
   });
 };
 
 module.exports.deleteMovie = (movieId) => {
-  console.log("movieId", movieId);
   return new Promise( function (resolve, reject) {
     $.ajax({
       url: `${fbURL}/movies/${movieId}.json`,
@@ -84,3 +88,7 @@ module.exports.deleteMovie = (movieId) => {
 //     });
 //   });
 // };
+
+// module.exports.updateMovie = (movieData) => {
+
+// }

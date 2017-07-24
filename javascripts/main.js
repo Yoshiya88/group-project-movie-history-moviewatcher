@@ -109,14 +109,26 @@ $(document).on("click", ".star", function() {
 });
 
 
-$(document).on("click", ".delete", function() {
+$(document).on("click", ".delete", function(movieData) {
 	console.log("click delete");
 	let movieId = $(this).data("delete-id");
 	console.log("this.data", $(this).data("delete-id"));
-	movieFactory.deleteMovie(movieId);
-	// .then(function (){
-		//load songs to refesh after delete
-	// })
+	movieFactory.deleteMovie(movieId)
+	.then(function (){
+		movieFactory.getUserMovies()
+				.then((movieData) => {
+			console.log("movieData", movieData);
+			console.log("object key?", Object.keys(movieData));
+			$.each(movieData, (index, movie) => {
+				if(movie.watched === false) {
+					console.log("movie", movie.cast);
+					// console.log("watched?", movie.watched);
+					let searchWatchlist = builder.searchMoviesToDOM(movieData);
+			        $("#DOM-element").html(searchWatchlist);
+		   		 }
+		    });
+		});
+	});
 });
 
 
